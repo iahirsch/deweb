@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/ico" href="img/favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <script type="module" src="js/gameLoop.js" defer></script>
+    <title>Echoes of Ethan Cooper</title>
+</head>
+
+<body>
+    <audio id="musicScene1" loop>
+        <source src="/assets/sound/musicScene1.mp3" type="audio/wav">
+    </audio>    
+    <audio id="musicScene2" loop>
+        <source src="/assets/sound/musicScene2.mp3" type="audio/wav">
+    </audio>
+    <audio id="pickup_book" src="/assets/sound/pickup.wav"></audio>
+    <audio id="turning_page" src="/assets/sound/turning_page.wav"></audio>
+    <audio id="writing" src="/assets/sound/writing.wav"></audio>
+    <audio id="ocean_sound" src="/assets/sound/ocean.wav"></audio>
+    <div id="startscreen">
+        <p id="title">Echoes of Ethan Cooper</p>
+        <p id="info">Click to start</p>
+    </div>
+    <div id="story-display" style="display: none"></div>
+
+    <div id="scene1">
+        <div id="particle-container"></div>
+        <div id="background-container"></div>
+    </div>
+    <div id="scene2"></div>
+</body>
+
+</html>

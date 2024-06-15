@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css?family=Waiting+for+the+Sunrise');
+
+#book1 {
+    transform-style: preserve-3d;
+    position: relative;
+    height: 300px;
+    z-index: 10;
+    cursor: pointer;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.pages {
+    transform-style: preserve-3d;
+    position: absolute;
+    width: 200px;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-origin: left center;
+    transition: transform .9s ease-in-out, box-shadow .35s ease-in-out;
+    border-bottom-right-radius: .5em;
+    border-top-right-radius: .5em;
+}
+
+.front,
+.back {
+    background: rgb(60, 97, 183);
+    box-shadow: inset 20px 0 50px rgba(0, 0, 0, .2), 0 10px 100px rgba(0, 0, 0, .3);
+}
+
+.page1 {
+    background: #efefef;
+}
+
+.page2 {
+    background: #efefef;
+}
+
+.page3 {
+    background: #f5f5f5;
+}
+
+.page4 {
+    background: #f5f5f5;
+}
+
+.page5 {
+    background: #fafafa;
+}
+
+.page6 {
+    background: #fdfdfd;
+}
+
+#book1.open .front {
+    transform: rotateY(-180deg) scale(1.7);
+    box-shadow: inset 20px 0 50px rgba(0, 0, 0, .2), 0 10px 100px rgba(0, 0, 0, .3);
+}
+
+#book1.open .page1 {
+    transform: rotateY(-170deg) scale(1.7);
+    box-shadow: inset 20px 0 50px rgba(0, 0, 0, .2), 0 10px 100px rgba(0, 0, 0, .3);
+}
+
+#book1.open .page2 {
+    transform: rotateY(-10deg) scale(1.7);
+    box-shadow: inset 20px 0 50px rgba(0, 0, 0, .2), 0 10px 100px rgba(0, 0, 0, .3);
+}
+
+#book1.open .page3 {
+    transform: rotateY(-170deg) scale(1.7);
+    box-shadow: inset 20px 0 50px rgba(0, 0, 0, .2), 0 10px 100px rgba(0, 0, 0, .3);
+}
+
+#book1.open .page4 {
+    transform: rotateY(-20deg) scale(1.7);
+    box-shadow: inset 20px 0 50px rgba(0, 0, 0, .2), 0 10px 100px rgba(0, 0, 0, .3);
+}
+
+#book1.open .page5 {
+    transform: rotateY(-160deg) scale(1.7);
+    box-shadow: inset 20px 0 50px rgba(0, 0, 0, .2), 0 10px 100px rgba(0, 0, 0, .3);
+}
+
+#book1.open .page6 {
+    transform: rotateY(-30deg) scale(1.7);
+    box-shadow: inset 20px 0 50px rgba(0, 0, 0, .2), 0 10px 100px rgba(0, 0, 0, .3);
+}
+
+#book1.open .back {
+    transform: rotateY(0deg) scale(1.7);
+}
+
+#book1.zoom .front {
+    transform: rotateY(-180deg) scale(4);
+    box-shadow: inset 20px 0 50px rgba(0, 0, 0, .2), 0 10px 100px rgba(0, 0, 0, .3);
+    transition: transform 18s ease-in-out;
+}
+
+#book1.zoom .page1 {
+    transform: rotateY(-178deg) scale(4);
+    box-shadow: inset 20px 0 50px rgba(0, 0, 0, .2), 0 10px 100px rgba(0, 0, 0, .3);
+    transition: transform 18s ease-in-out;
+}
+
+#book1.zoom .page2 {
+    transform: rotateY(-2deg) scale(4);
+    box-shadow: inset 20px 0 50px rgba(0, 0, 0, .2), 0 10px 100px rgba(0, 0, 0, .3);
+    transition: transform 18s ease-in-out;
+}
+
+#book1.zoom .page3 {
+    transform: rotateY(-176deg) scale(4);
+    box-shadow: inset 20px 0 50px rgba(0, 0, 0, .2), 0 10px 100px rgba(0, 0, 0, .3);
+    transition: transform 18s ease-in-out;
+}
+
+#book1.zoom .page4 {
+    transform: rotateY(-4deg) scale(4);
+    box-shadow: inset 20px 0 50px rgba(0, 0, 0, .2), 0 10px 100px rgba(0, 0, 0, .3);
+    transition: transform 18s ease-in-out;
+}
+
+#book1.zoom .page5 {
+    transform: rotateY(-174deg) scale(4);
+    box-shadow: inset 20px 0 50px rgba(0, 0, 0, .2), 0 10px 100px rgba(0, 0, 0, .3);
+    transition: transform 18s ease-in-out;
+}
+
+#book1.zoom .page6 {
+    transform: rotateY(-6deg) scale(4);
+    box-shadow: inset 20px 0 50px rgba(0, 0, 0, .2), 0 10px 100px rgba(0, 0, 0, .3);
+    transition: transform 18s ease-in-out;
+}
+
+#book1.zoom .back {
+    transform: rotateY(0deg) scale(4);
+    transition: transform 18s ease-in-out;
+}
+
+#typedtext {
+    font-family: 'Waiting for the Sunrise', cursive;
+    letter-spacing: 4px;
+    font-weight: bold;
+    font-size: 0.8em;
+    padding: 10px;
+}
