@@ -1,3 +1,5 @@
+//TODO: Refactor Javascript OOP
+
 import { initializeParticles } from './particles.js';
 import { createStoryElements, handleStoryElements, displayIntro } from './dynamicHandler.js';
 import { fadeIn } from './fade.js';

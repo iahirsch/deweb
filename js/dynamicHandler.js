@@ -16,6 +16,7 @@ const storySegments = {
     giftcard: "This is the story for giftcard.",
 };
 
+//TODO: Create better visual queue for user (pulsating or glow around interactable)
 function createStoryElements() {
     const divInfo = [
         {id: 'boat', category: 1},
@@ -106,6 +107,7 @@ function addCSS(css) {
     }
 }
 
+//TODO: Use removeCSS function
 function removeCSS(css) {
     const link = document.getElementById(css);
     if (link) {
