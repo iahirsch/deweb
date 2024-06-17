@@ -35,17 +35,13 @@ function startGame() {
         startScreen.style.display = "none";
     }, 2500);
     setTimeout(displayIntro, 2000);
-    //player.anim.play();
 }
 
 function stopGame() {
     info.innerText = "Click to restart";
-    //player.anim.cancel();
-    //player.style.transform = `translate(${player.x}px, ${player.y}px)`;
     startScreen.style.display = "flex";
     startScreen.style.opacity = "1";
     musicScene1.pause();
-    //player.style.transform = 'translate(0, 0)';
 }
 
 document.addEventListener('DOMContentLoaded', () => {

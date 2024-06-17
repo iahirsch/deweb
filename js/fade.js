@@ -1,10 +1,10 @@
 function fadeIn(audio, duration) {
     audio.volume = 0;
     audio.play();
-    var step = 0.05;
-    var maxVolume = 0.5;
-    var interval = duration / (1 / step);
-    var fadeAudio = setInterval(function () {
+    let step = 0.05;
+    let maxVolume = 0.5;
+    let interval = duration / (1 / step);
+    let fadeAudio = setInterval(function () {
         if (audio.volume < maxVolume) {
             audio.volume = Math.min(audio.volume + step, maxVolume);
             console.log(audio.volume);
@@ -15,9 +15,9 @@ function fadeIn(audio, duration) {
 }
 
 function fadeOut(audio, duration) {
-    var step = 0.05;
-    var interval = duration / (1 / step);
-    var fadeAudio = setInterval(function () {
+    let step = 0.05;
+    let interval = duration / (1 / step);
+    let fadeAudio = setInterval(function () {
         if (audio.volume > 0.0) {
             audio.volume = Math.max(audio.volume - step, 0);
         } else {

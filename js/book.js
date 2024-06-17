@@ -1,5 +1,5 @@
-import { showScene2 } from './dynamicHandler.js';
-import { fadeIn, fadeOut } from './fade.js';
+import {showScene2} from './dynamicHandler.js';
+import {fadeIn, fadeOut} from './fade.js';
 
 let bookExistent = false;
 
@@ -40,13 +40,13 @@ function createBook() {
 
 function onMouseMove(e) {
     if (bookExistent) {
-        var book = document.getElementById('book1');
-        var centerX = window.innerWidth / 2;
-        var centerY = window.innerHeight / 2;
-        var deltaX = e.clientX - centerX;
-        var deltaY = e.clientY - centerY;
-        var rotateY = deltaX * 0.04;
-        var rotateX = deltaY * -0.04;
+        let book = document.getElementById('book1');
+        let centerX = window.innerWidth / 2;
+        let centerY = window.innerHeight / 2;
+        let deltaX = e.clientX - centerX;
+        let deltaY = e.clientY - centerY;
+        let rotateY = deltaX * 0.04;
+        let rotateX = deltaY * -0.04;
         book.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
     }
 }
@@ -74,31 +74,31 @@ function openBook() {
 }
 
 // Typewriter effect
-var aText = [
+let aText = [
     "Ethan, a brave explorer, sailed his trusty vessel through the treacherous Foggy Coast. Fear gnawed at his heart, but his determination to reach the fabled Isle of Imagination was stronger."
 ];
-var iSpeed = 60; // time delay of print out
-var iIndex = 0; // start printing array at this posision
-var iArrLength = aText[0].length; // the length of the text array
-var iScrollAt = 20; // start scrolling up at this many lines
+let iSpeed = 60; // time delay of print out
+let iIndex = 0; // start printing array at this position
+let iArrLength = aText[0].length; // the length of the text array
+let iScrollAt = 20;
 
-var iTextPos = 0; // initialise text position
-var sContents = ''; // initialise contents variable
-var iRow; // initialise current row
+let iTextPos = 0; // initialise text position
+let sContents = ''; // initialise contents variable
+let iRow; // initialise current row
 
 function typewriter() {
     sContents = ' ';
     iRow = Math.max(0, iIndex - iScrollAt);
-    var destination = document.getElementById("typedtext");
+    let destination = document.getElementById("typedtext");
 
     while (iRow < iIndex) {
         sContents += aText[iRow++] + '<br />';
     }
     destination.innerHTML = sContents + aText[iIndex].substring(0, iTextPos);
-    if (iTextPos++ == iArrLength) {
+    if (iTextPos++ === iArrLength) {
         iTextPos = 0;
         iIndex++;
-        if (iIndex != aText.length) {
+        if (iIndex !== aText.length) {
             iArrLength = aText[iIndex].length;
             setTimeout(typewriter, 500);
         }
@@ -107,4 +107,4 @@ function typewriter() {
     }
 }
 
-export { setBookExistent, createBook, typewriter };
+export {setBookExistent, createBook, typewriter};

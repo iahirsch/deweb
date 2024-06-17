@@ -137,7 +137,7 @@ body {
 }
 
 .positioned-div {
-    background-color: #ffffff1f;
+    /*background-color: #ffffff;*/
     position: absolute;
     z-index: 1;
 }
@@ -147,31 +147,31 @@ body {
 }
 
 #book {
-    width: 60px;
-    height: 60px;
-    top: calc(50% + 255px);
-    left: calc(50% - 230px);
+    width: 4vw;
+    height: 6vh;
+    bottom: 9vh;
+    left: 34vw;
 }
 
 #boat {
-    width: 100px;
-    height: 100px;
-    top: calc(50% + 70px);
-    left: calc(50% + 132px);
+    width: 7vw;
+    height: 20vh;
+    bottom: 23vh;
+    left: 59vw;
 }
 
 #exams {
-    width: 100px;
-    height: 100px;
-    top: calc(50% + 180px);
-    left: calc(50% - 170px);
+    width: 7vw;
+    height: 11vh;
+    bottom: 14vh;
+    left: 38vw;
 }
 
 #giftcard {
-    width: 100px;
-    height: 90px;
-    top: calc(50% - 100px);
-    left: calc(50% - 240px);
+    width: 4vw;
+    height: 9vh;
+    bottom: 46vh;
+    left: 34vw;
 }
 
 #scene2 {

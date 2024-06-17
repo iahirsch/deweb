@@ -3,8 +3,15 @@ import {createOcean, moveOcean} from './ocean.js';
 import {createGiftcard} from './giftcard.js';
 
 const scene1 = document.getElementById('scene1');
+const scene2 = document.getElementById('scene2');
 const backgroundContainer = document.getElementById('background-container');
 const storyDisplay = document.getElementById('story-display');
+const book1 = document.getElementById('book1');
+const particle = document.getElementById('particle-container');
+//Sound Effects
+let turnPage = document.getElementById('turning_page');
+let openBook = document.getElementById('pickup_book');
+
 let typewriterInterval;
 let typewriterTimeout;
 
@@ -40,6 +47,7 @@ function displayIntro() {
     storyDisplay.style.display = 'block';
 }
 
+//TODO: Show book only after all the other elements were clicked
 function handleStoryElements() {
     const divs = document.querySelectorAll('.positioned-div');
 
@@ -51,7 +59,6 @@ function handleStoryElements() {
                 clearInterval(typewriterInterval);
             }
 
-            const particle = document.getElementById('particle-container');
             const css = div.id;
             const category = div.dataset.category;
 
@@ -61,13 +68,11 @@ function handleStoryElements() {
                 storyDisplay.classList.add('scene1');
                 storyDisplay.style.display = 'block';
                 typewriter(storySegments[css], storyDisplay);
-                //div.remove();
 
                 if (category === '2') {
                     addCSS(css);
                     backgroundContainer.classList.add('show');
                     backgroundContainer.addEventListener('click', hideBackgroundContainer);
-                    let turnPage = document.getElementById('turning_page');
                     turnPage.play();
                 }
 
@@ -76,10 +81,8 @@ function handleStoryElements() {
                 backgroundContainer.classList.add('show');
                 particle.remove();
                 backgroundContainer.removeEventListener('click', hideBackgroundContainer);
-                let openBook = document.getElementById('pickup_book');
                 openBook.play();
             }
-
         });
     });
 }
@@ -117,9 +120,6 @@ function removeCSS(css) {
 
 function showScene2() {
     createOcean();
-    const scene1 = document.getElementById('scene1');
-    const scene2 = document.getElementById('scene2');
-    const book1 = document.getElementById('book1');
 
     scene2.style.opacity = 1;
     moveOcean();
