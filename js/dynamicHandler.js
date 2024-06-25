@@ -14,11 +14,18 @@ let openBook = document.getElementById('pickup_book');
 //TODO: Example (replace by voice audio). Replace writing with voice_audio_x
 let writing = document.getElementById('writing');
 
-let divInfo = [{id: 'boat', category: 1, clicked: false}, {id: 'exams', category: 1, clicked: false}, {
-    id: 'giftcard',
-    category: 2,
-    clicked: false
-},];
+let currentlyPlayingAudio = null;
+
+const audioFiles = [turnPage, openBook, writing];
+audioFiles.forEach(audio => {
+    audio.addEventListener('ended', handleAudioEnd);
+});
+
+let divInfo = [
+    {id: 'boat', category: 1, clicked: false},
+    {id: 'exams', category: 1, clicked: false},
+    {id: 'giftcard', category: 2, clicked: false},
+];
 
 let typewriterInterval;
 let typewriterTimeout;
@@ -58,7 +65,7 @@ function displayIntro() {
     storyDisplay.classList.add('scene1');
     typewriter(storySegments.intro, storyDisplay);
     storyDisplay.style.display = 'block';
-    writing.play();
+    playVoiceAudio('intro');
 }
 
 //Animation for Hint
@@ -69,14 +76,13 @@ function startHintAnimation() {
             div.style.opacity = 1;
             setTimeout(() => {
                 div.classList.add('animated');
-            }, 3000);
+            }, 4000);
         });
     } else {
         const posDivBook = document.getElementById('book');
         posDivBook.opacity = 1;
         setTimeout(() => {
             posDivBook.classList.add('animated');
-            writing.play();
         }, 3000);
     }
 }
@@ -87,8 +93,6 @@ function stopHintAnimation() {
         div.style.opacity = 0;
         div.classList.remove('animated');
     });
-    // TODO: Change timeout to audio length
-    setTimeout(startHintAnimation, 15000);
 }
 
 function handleStoryElements(info) {
@@ -121,7 +125,7 @@ function handleStoryElements(info) {
         storyDisplay.classList.add('scene1');
         storyDisplay.style.display = 'block';
         typewriter(storySegments[css], storyDisplay);
-        writing.play();
+        playVoiceAudio(css);
 
         if (category === 2) {
             addCSS(css);
@@ -131,14 +135,66 @@ function handleStoryElements(info) {
         }
 
     } else if (category === 3) {
+        playVoiceAudio(css);
         addCSS(css);
         backgroundContainer.classList.add('show');
         particle.remove();
         backgroundContainer.removeEventListener('click', hideBackgroundContainer);
         openBook.play();
         typewriter(storySegments[css], storyDisplay);
-        writing.play();
     }
+}
+
+function playVoiceAudio(userInput) {
+    stopCurrentlyPlayingAudio();
+
+    switch (userInput) {
+        case 'intro':
+            console.log('audio intro');
+            currentlyPlayingAudio = writing;
+            break;
+        case 'boat':
+            console.log('audio boat');
+            currentlyPlayingAudio = writing;
+            break;
+        case 'exams':
+            console.log('audio exams');
+            currentlyPlayingAudio = writing;
+            break;
+        case 'giftcard':
+            console.log('audio giftcard');
+            currentlyPlayingAudio = writing;
+            break;
+        case 'hint':
+            console.log('audio hint');
+            currentlyPlayingAudio = openBook;
+            break;
+        default:
+            console.log('Invalid input');
+            currentlyPlayingAudio = null;
+            break;
+    }
+
+    if (currentlyPlayingAudio != null) {
+        currentlyPlayingAudio.play();
+    }
+}
+
+function stopCurrentlyPlayingAudio() {
+    if (currentlyPlayingAudio) {
+        currentlyPlayingAudio.pause();
+        currentlyPlayingAudio.currentTime = 0;
+    }
+}
+
+function handleAudioEnd() {
+    currentlyPlayingAudio = null;
+    if (allElementsClicked) {
+        setTimeout(() => {
+            playVoiceAudio('hint');
+        }, 15000);
+    }
+    setTimeout(startHintAnimation, 5000);
 }
 
 function hideBackgroundContainer() {

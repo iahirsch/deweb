@@ -39,7 +39,6 @@ function startGame() {
         startScreen.style.display = "none";
     }, 2500);
     setTimeout(displayIntro, 2000);
-    setTimeout(startHintAnimation, 15000);
 }
 
 function stopGame() {
