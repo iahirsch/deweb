@@ -23,6 +23,7 @@
     border-top-right-radius: .5em;
 }
 
+/*TODO: Add label to front of book*/
 .front,
 .back {
     background: rgb(60, 97, 183);

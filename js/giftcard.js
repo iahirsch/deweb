@@ -12,9 +12,8 @@ function createGiftcard() {
     bark.classList.add('bark');
 
     // Create the img element
-    //TODO: update giftcard image
     const img = document.createElement('img');
-    img.src = 'https://image.ibb.co/fYzTrb/lastofus.jpg';
+    img.src = '../assets/room/giftcard.jpg';
 
     // Append bark and img to imgBox
     imgBox.appendChild(bark);

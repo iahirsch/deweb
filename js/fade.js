@@ -7,7 +7,6 @@ function fadeIn(audio, duration) {
     let fadeAudio = setInterval(function () {
         if (audio.volume < maxVolume) {
             audio.volume = Math.min(audio.volume + step, maxVolume);
-            console.log(audio.volume);
         } else {
             clearInterval(fadeAudio);
         }

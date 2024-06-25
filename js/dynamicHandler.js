@@ -11,9 +11,21 @@ const particle = document.getElementById('particle-container');
 //Sound Effects
 let turnPage = document.getElementById('turning_page');
 let openBook = document.getElementById('pickup_book');
+//TODO: Example (replace by voice audio). Replace writing with voice_audio_x
+let writing = document.getElementById('writing');
+
+let divInfo = [{id: 'boat', category: 1, clicked: false}, {id: 'exams', category: 1, clicked: false}, {
+    id: 'giftcard',
+    category: 2,
+    clicked: false
+},];
 
 let typewriterInterval;
 let typewriterTimeout;
+let storyElementsCounter = 0;
+let allElementsClicked = false;
+
+let eventListenerCounter = 0;
 
 const storySegments = {
     intro: "It's been a while since I've been here. Two years to be exact. Everything's exactly how he left it. Maybe going through his things will help me understand. I should have a look around.",
@@ -23,21 +35,22 @@ const storySegments = {
     giftcard: "This is the story for giftcard.",
 };
 
-//TODO: Create better visual queue for user (pulsating or glow around interactable)
-function createStoryElements() {
-    const divInfo = [
-        {id: 'boat', category: 1},
-        {id: 'exams', category: 1},
-        {id: 'giftcard', category: 2},
-        {id: 'book', category: 3}
-    ];
+function initiateStoryElements() {
+    for (let i = 0; i < divInfo.length; i++) {
+        createStoryElements(divInfo[i]);
+    }
+}
 
-    divInfo.forEach(info => {
-        const div = document.createElement('div');
-        div.classList.add('positioned-div');
-        div.id = info.id;
-        div.dataset.category = info.category;
-        scene1.appendChild(div);
+function createStoryElements(info) {
+    const div = document.createElement('div');
+    div.classList.add('positioned-div');
+    div.id = info.id;
+    div.dataset.category = info.category;
+    scene1.appendChild(div);
+
+    div.addEventListener('click', stopHintAnimation);
+    div.addEventListener('click', function () {
+        handleStoryElements(info)
     });
 }
 
@@ -45,46 +58,87 @@ function displayIntro() {
     storyDisplay.classList.add('scene1');
     typewriter(storySegments.intro, storyDisplay);
     storyDisplay.style.display = 'block';
+    writing.play();
 }
 
-//TODO: Show book only after all the other elements were clicked
-function handleStoryElements() {
-    const divs = document.querySelectorAll('.positioned-div');
-
-    divs.forEach(div => {
-        div.addEventListener('click', function () {
-
-            // Clear any existing typewriter intervals
-            if (typewriterInterval) {
-                clearInterval(typewriterInterval);
-            }
-
-            const css = div.id;
-            const category = div.dataset.category;
-
-            console.log(`category: ${category}`);
-
-            if (category <= 2) {
-                storyDisplay.classList.add('scene1');
-                storyDisplay.style.display = 'block';
-                typewriter(storySegments[css], storyDisplay);
-
-                if (category === '2') {
-                    addCSS(css);
-                    backgroundContainer.classList.add('show');
-                    backgroundContainer.addEventListener('click', hideBackgroundContainer);
-                    turnPage.play();
-                }
-
-            } else if (category === '3') {
-                addCSS(css);
-                backgroundContainer.classList.add('show');
-                particle.remove();
-                backgroundContainer.removeEventListener('click', hideBackgroundContainer);
-                openBook.play();
-            }
+//Animation for Hint
+function startHintAnimation() {
+    if (!allElementsClicked) {
+        const circles = document.querySelectorAll('.positioned-div');
+        circles.forEach(div => {
+            div.style.opacity = 1;
+            setTimeout(() => {
+                div.classList.add('animated');
+            }, 3000);
         });
+    } else {
+        const posDivBook = document.getElementById('book');
+        posDivBook.opacity = 1;
+        setTimeout(() => {
+            posDivBook.classList.add('animated');
+            writing.play();
+        }, 3000);
+    }
+}
+
+function stopHintAnimation() {
+    const circles = document.querySelectorAll('.positioned-div');
+    circles.forEach(div => {
+        div.style.opacity = 0;
+        div.classList.remove('animated');
     });
+    // TODO: Change timeout to audio length
+    setTimeout(startHintAnimation, 15000);
+}
+
+function handleStoryElements(info) {
+    console.log(eventListenerCounter);
+
+    // Clear any existing typewriter intervals
+    if (typewriterInterval) {
+        clearInterval(typewriterInterval);
+    }
+
+    // Count storyElementsClicked to show book after
+    if (!info.clicked) {
+        info.clicked = true;
+        storyElementsCounter++;
+    }
+
+    if (storyElementsCounter === divInfo.length && !allElementsClicked) {
+        allElementsClicked = true;
+        createStoryElements({id: 'book', category: 3});
+
+    }
+
+    const css = info.id;
+    const category = info.category;
+
+    console.log(`category: ${category}`);
+    console.log(`storyElementsCounter: ${storyElementsCounter} ? ${divInfo.length}`);
+
+    if (category <= 2) {
+        storyDisplay.classList.add('scene1');
+        storyDisplay.style.display = 'block';
+        typewriter(storySegments[css], storyDisplay);
+        writing.play();
+
+        if (category === 2) {
+            addCSS(css);
+            backgroundContainer.classList.add('show');
+            backgroundContainer.addEventListener('click', hideBackgroundContainer);
+            turnPage.play();
+        }
+
+    } else if (category === 3) {
+        addCSS(css);
+        backgroundContainer.classList.add('show');
+        particle.remove();
+        backgroundContainer.removeEventListener('click', hideBackgroundContainer);
+        openBook.play();
+        typewriter(storySegments[css], storyDisplay);
+        writing.play();
+    }
 }
 
 function hideBackgroundContainer() {
@@ -149,12 +203,8 @@ function typewriter(text, element) {
             span.textContent = chars[index];
             element.appendChild(span);
 
-            span.animate([
-                {opacity: 0},
-                {opacity: 1}
-            ], {
-                duration: 500,
-                fill: 'forwards'
+            span.animate([{opacity: 0}, {opacity: 1}], {
+                duration: 500, fill: 'forwards'
             });
 
             index++;
@@ -170,4 +220,4 @@ function typewriter(text, element) {
 }
 
 
-export {createStoryElements, handleStoryElements, displayIntro, showScene2};
+export {initiateStoryElements, displayIntro, showScene2, typewriter, startHintAnimation};

@@ -1,11 +1,20 @@
+import {typewriter} from "./dynamicHandler.js";
+
 let speed = 1;
 let oceanX = 0;
 let vx = 0;
 const ms = 1000 / 60;
 let options = {duration: ms, endDelay: -5};
-let collisionBoxes = [];
+/*let collisionBoxes = [];*/
 
 let scene2 = document.getElementById('scene2');
+const storyDisplay = document.getElementById('story-display');
+
+const storySegments = {
+    rock1: "Rock1",
+    rock2: "Rock2",
+    rock3: "Rock3",
+};
 
 function createOcean() {
     // Ensure the scene2 element exists
@@ -52,7 +61,7 @@ function createOcean() {
             item.style.bottom = itemInfo.pos[1] + 'vh';
             container.appendChild(item);
 
-            addCollisionBox(item, 150, 500);
+            /*addCollisionBox(item, 150, 500);*/
         });
 
         // Create the player
@@ -129,7 +138,7 @@ function moveOcean() {
     });
 }
 
-function addCollisionBox(itemElement, width, height) {
+/*function addCollisionBox(itemElement, width, height) {
     const boxElem = document.createElement("div");
     boxElem.classList.add("collision-box");
     boxElem.style.position = "absolute";
@@ -138,29 +147,41 @@ function addCollisionBox(itemElement, width, height) {
     boxElem.style.backgroundColor = "red";
     itemElement.appendChild(boxElem);
     collisionBoxes.push(boxElem);
-}
+}*/
 
-//TODO: Add checkCollision and action
-function checkCollision() {
-    const playerBox = {
-        x: this.x,
-        y: this.y,
-        width: this.elem.offsetWidth,
-        height: this.elem.offsetHeight,
-    };
+/*function checkCollision() {
+    const element = document.getElementById('player');
+    if (element) {
+        const rect = element.getBoundingClientRect();
 
-    for (const box of playfield.collisionBoxes) {
-        if (
-            playerBox.x < box.x + box.width &&
-            playerBox.x + playerBox.width > box.x &&
-            playerBox.y < box.y + box.height &&
-            playerBox.y + playerBox.height > box.y
-        ) {
-            console.log("Collision detected!");
-            return true;
+        const playerBox = {
+            x: rect.left + window.scrollX,
+            y: rect.top + window.scrollY,
+            width: element.offsetWidth,
+            height: element.offsetHeight,
+        };
+
+        for (const box of collisionBoxes) {
+            if (
+                playerBox.x < box.x + box.width &&
+                playerBox.x + playerBox.width > box.x &&
+                playerBox.y < box.y + box.height &&
+                playerBox.y + playerBox.height > box.y
+            ) {
+                console.log("Collision detected!");
+                console.log(playerBox);
+                return true;
+            }
         }
+        return false;
     }
-    return false;
+}*/
+
+function displayStory(elem) {
+    storyDisplay.classList.remove('scene1');
+    storyDisplay.classList.add('scene2');
+    storyDisplay.style.display = 'block';
+    typewriter(storySegments[elem], storyDisplay);
 }
 
 
@@ -170,6 +191,7 @@ function checkCollision() {
 globalThis.addEventListener('keydown', onkeydown, false);
 globalThis.addEventListener('keyup', onkeyup, false);
 
+//TODO: Trigger displayStory according to screen Size
 let keys = {};
 onkeydown = onkeyup = (e) => {
     keys[e.code] = e.type === 'keydown';
@@ -178,9 +200,17 @@ onkeydown = onkeyup = (e) => {
         vx = speed;
     } else if (keys.KeyD && oceanX > -20000) {
         vx = -speed;
+        if (oceanX >= -1560 && oceanX <= -1540) {
+            displayStory('rock1');
+        }if (oceanX >= -4470 && oceanX <= -4450) {
+            displayStory('rock2');
+        }if (oceanX >= -4470 && oceanX <= -4450) {
+            displayStory('rock3');
+        }
     } else {
         vx = 0;
     }
 };
+
 
 export {createOcean, moveOcean};

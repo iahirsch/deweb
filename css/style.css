@@ -137,9 +137,58 @@ body {
 }
 
 .positioned-div {
-    /*background-color: #ffffff;*/
     position: absolute;
     z-index: 1;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    opacity: 0;
+    transition: opacity 3s ease-in-out;
+}
+
+.animated {
+    animation: pulsate 5s infinite ease-in-out, particles 2.5s infinite linear;
+}
+
+@keyframes pulsate {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.4;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes particles {
+
+    0%,
+    100% {
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.75),
+            0 0 20px rgba(255, 255, 255, 0.5),
+            0 0 30px rgba(255, 255, 255, 0.4),
+            0 0 40px rgba(255, 255, 255, 0.3);
+    }
+
+    33% {
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.4),
+            0 0 20px rgba(255, 255, 255, 0.64),
+            0 0 30px rgba(255, 255, 255, 0.5),
+            0 0 40px rgba(255, 255, 255, 0.3);
+    }
+
+    66% {
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3),
+            0 0 20px rgba(255, 255, 255, 0.4),
+            0 0 30px rgba(255, 255, 255, 0.72),
+            0 0 40px rgba(255, 255, 255, 0.5);
+    }
 }
 
 .positioned-div:hover {
@@ -148,30 +197,30 @@ body {
 
 #book {
     width: 4vw;
-    height: 6vh;
-    bottom: 9vh;
-    left: 34vw;
+    height: 7.5vh;
+    bottom: 7vh;
+    left: 33.5vw;
 }
 
 #boat {
-    width: 7vw;
-    height: 20vh;
-    bottom: 23vh;
-    left: 59vw;
+    width: 9vw;
+    height: 18vh;
+    bottom: 25vh;
+    left: 58.2vw;
 }
 
 #exams {
     width: 7vw;
-    height: 11vh;
-    bottom: 14vh;
+    height: 13vh;
+    bottom: 11vh;
     left: 38vw;
 }
 
 #giftcard {
-    width: 4vw;
-    height: 9vh;
+    width: 5vw;
+    height: 10vh;
     bottom: 46vh;
-    left: 34vw;
+    left: 33vw;
 }
 
 #scene2 {

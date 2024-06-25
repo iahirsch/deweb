@@ -1,8 +1,12 @@
 //TODO: Refactor Javascript OOP
 
-import { initializeParticles } from './particles.js';
-import { createStoryElements, handleStoryElements, displayIntro } from './dynamicHandler.js';
-import { fadeIn } from './fade.js';
+import {initializeParticles} from './particles.js';
+import {
+    initiateStoryElements,
+    displayIntro,
+    startHintAnimation,
+} from './dynamicHandler.js';
+import {fadeIn} from './fade.js';
 
 const info = document.getElementById("info");
 const startScreen = document.getElementById("startscreen");
@@ -35,6 +39,7 @@ function startGame() {
         startScreen.style.display = "none";
     }, 2500);
     setTimeout(displayIntro, 2000);
+    setTimeout(startHintAnimation, 15000);
 }
 
 function stopGame() {
@@ -45,7 +50,6 @@ function stopGame() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    createStoryElements();
-    handleStoryElements();
+    initiateStoryElements();
     initializeParticles();
 });
