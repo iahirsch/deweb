@@ -50,7 +50,7 @@ body {
     background-color: rgba(0, 0, 0, 0.7);
     font-family: "Indie Flower", cursive;
     font-weight: 400;
-    font-size: 26px;
+    font-size: 1.4vw;
     color: white;
     padding: 15px;
     border-radius: 10px;
@@ -68,7 +68,7 @@ body {
     transform: translateX(-50%);
     font-family: "Indie Flower", cursive;
     font-weight: 400;
-    font-size: 28px;
+    font-size: 1.6vw;
     color: white;
     padding: 20px;
     border-radius: 10px;
@@ -197,29 +197,29 @@ body {
 }
 
 #book {
-    width: 4vw;
-    height: 7.5vh;
-    bottom: 7vh;
-    left: 33.5vw;
+    width: 5vw;
+    height: 5vw;
+    bottom: 13.5vh;
+    left: 26.5vw;
 }
 
 #boat {
     width: 9vw;
-    height: 18vh;
+    height: 9vw;
     bottom: 25vh;
     left: 58.2vw;
 }
 
 #exams {
     width: 7vw;
-    height: 13vh;
+    height: 7vw;
     bottom: 11vh;
     left: 38vw;
 }
 
 #giftcard {
     width: 5vw;
-    height: 10vh;
+    height: 5vw;
     bottom: 46vh;
     left: 33vw;
 }
@@ -235,13 +235,13 @@ body {
 
 #player {
     position: absolute;
-    bottom: 25vh;
+    bottom: 25%;
     left: 41vw;
-    width: 310px;
-    height: 187px;
+    width: 25%;
+    height: 25%;
     background-image: url("/assets/ocean/boat.png");
     background-repeat: no-repeat;
-    background-size: 310px;
+    background-size: 90%;
     z-index: 15;
 }
 
@@ -325,12 +325,12 @@ body {
 
 #rock1 {
     background-image: url("../assets/ocean/rock1.png");
-    background-size: 150px;
+    background-size: 15%;
     background-repeat: no-repeat;
-    /*background-color: rgba(255, 255, 255, 0.491);*/
+    /* background-color: rgba(255, 255, 255, 0.491); */
     z-index: 13;
-    width: 150px;
-    height: 30vh;
+    width: 50%;
+    height: 50%;
 }
 
 /* #rock2 {

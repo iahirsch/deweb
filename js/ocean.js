@@ -40,7 +40,7 @@ function createOcean() {
 
         // Create the item layers
         let items = [
-            { id: 'rock1', value: '0', scrollSpeed: '12', pos: [160, -8] },
+            { id: 'rock1', value: '0', scrollSpeed: '12', pos: [150, -24] },
             //{ id: 'rock2', value: '0', scrollSpeed: '12', pos: [180, -2] },
             //{ id: 'rock3', value: '0', scrollSpeed: '7', pos: [220, 0] },
         ];
@@ -60,8 +60,8 @@ function createOcean() {
             item.id = itemInfo.id;
             item.setAttribute('value', itemInfo.value);
             item.setAttribute('scrollSpeed', itemInfo.scrollSpeed);
-            item.style.left = itemInfo.pos[0] + 'vw';
-            item.style.bottom = itemInfo.pos[1] + 'vh';
+            item.style.left = itemInfo.pos[0] + '%';
+            item.style.bottom = itemInfo.pos[1] + '%';
             container.appendChild(item);
 
             /*addCollisionBox(item, 150, 500);*/
@@ -112,36 +112,41 @@ function moveOcean() {
     layers.forEach(layer => {
         let scrollSpeed = parseFloat(layer.getAttribute('scrollSpeed')) / 40;
 
+        function updateKeyframes() {
+            oceanAnim.effect.setKeyframes([
+                { backgroundPosition: `${(oceanX * scrollSpeed) / 6}% bottom` },
+                { backgroundPosition: `${((oceanX + vx) * scrollSpeed) / 6}% bottom` }
+            ]);
+        }
+
         let oceanAnim = layer.animate([
-            { backgroundPosition: `${oceanX * scrollSpeed}px bottom` },
-            { backgroundPosition: `${(oceanX + vx) * scrollSpeed}px bottom` }
+            { backgroundPosition: `${(oceanX * scrollSpeed) / 6}% bottom` },
+            { backgroundPosition: `${((oceanX + vx) * scrollSpeed) / 6}% bottom` }
         ], options);
 
         oceanAnim.onfinish = () => {
             oceanX += vx;
-            oceanAnim.effect.setKeyframes([
-                { backgroundPosition: `${oceanX * scrollSpeed}px bottom` },
-                { backgroundPosition: `${(oceanX + vx) * scrollSpeed}px bottom` }
-            ]);
+            updateKeyframes();
             oceanAnim.play();
         };
     });
+
 
     items.forEach(item => {
         let scrollSpeed = parseFloat(item.getAttribute('scrollSpeed')) / 40;
 
         let itemAnim = item.animate([
-            { transform: `translateX(${oceanX * scrollSpeed}px)` },
-            { transform: `translateX(${(oceanX + vx) * scrollSpeed}px)` }
+            { transform: `translateX(${(oceanX * scrollSpeed) / 6}%)` },
+            { transform: `translateX(${((oceanX + vx) * scrollSpeed) / 6}%)` }
         ], options);
 
         itemAnim.onfinish = () => {
             oceanX += vx;
             itemAnim.effect.setKeyframes([
-                { transform: `translateX(${oceanX * scrollSpeed}px)` },
-                { transform: `translateX(${(oceanX + vx) * scrollSpeed}px)` }
+                { transform: `translateX(${(oceanX * scrollSpeed) / 6}%)` },
+                { transform: `translateX(${((oceanX + vx) * scrollSpeed) / 6}%)` }
             ]);
-            infoText.style.transform = `translateX(${oceanX * scrollSpeed * 3}px)`;
+            infoText.style.transform = `translateX(${(oceanX * scrollSpeed * 3) / 6}%)`;
             itemAnim.play();
         };
     });
@@ -211,11 +216,11 @@ onkeydown = onkeyup = (e) => {
         vx = speed;
     } else if (keys.KeyD && oceanX > -20000) {
         vx = -speed;
-        if (oceanX >= -5720 && oceanX <= -5650) {
+        if (oceanX >= -4100 && oceanX <= -4000) {
             const char1 = document.getElementById('char1');
             char1.style.opacity = 1;
             displayStory('rock1');
-        } if (oceanX >= -16000 && oceanX <= -15950) {
+        } if (oceanX >= -14000 && oceanX <= -13500) {
             showScene1();
         }
     } else {
