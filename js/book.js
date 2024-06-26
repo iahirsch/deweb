@@ -1,5 +1,5 @@
-import {showScene2} from './dynamicHandler.js';
-import {fadeIn, fadeOut} from './fade.js';
+import { showScene2, playVoiceAudioBook } from './dynamicHandler.js';
+import { fadeIn, fadeOut } from './fade.js';
 
 let bookExistent = false;
 
@@ -55,6 +55,7 @@ function openBook() {
     const book1 = document.getElementById('book1');
     this.classList.add('open');
     this.style.cursor = 'none';
+    playVoiceAudioBook();
     document.getElementById('background-container').style.cursor = 'none';
     setTimeout(() => {
         let writing = document.getElementById('writing');
@@ -75,7 +76,7 @@ function openBook() {
 
 // Typewriter effect
 let aText = [
-    "Ethan, a brave explorer, sailed his trusty vessel through the treacherous Foggy Coast. Fear gnawed at his heart, but his determination to reach the fabled Isle of Imagination was stronger."
+    "I was on an exciting expedition today.Dad was still sawing logs back at the house. Gripping the oar, I began to row. My arms ached, trying to manoeuvre this mighty ship, when suddenly ..."
 ];
 let iSpeed = 60; // time delay of print out
 let iIndex = 0; // start printing array at this position
@@ -107,4 +108,4 @@ function typewriter() {
     }
 }
 
-export {setBookExistent, createBook, typewriter};
+export { setBookExistent, createBook, typewriter };

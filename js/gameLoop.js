@@ -1,12 +1,11 @@
 //TODO: Refactor Javascript OOP
 
-import {initializeParticles} from './particles.js';
+import { initializeParticles } from './particles.js';
 import {
     initiateStoryElements,
     displayIntro,
-    startHintAnimation,
 } from './dynamicHandler.js';
-import {fadeIn} from './fade.js';
+import { fadeIn } from './fade.js';
 
 const info = document.getElementById("info");
 const startScreen = document.getElementById("startscreen");
@@ -52,3 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initiateStoryElements();
     initializeParticles();
 });
+
+
+export { stopGame };

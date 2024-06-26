@@ -1,19 +1,22 @@
-import {typewriter} from "./dynamicHandler.js";
+import { typewriter, hideBackgroundContainer, showScene1 } from "./dynamicHandler.js";
 
 let speed = 1;
 let oceanX = 0;
 let vx = 0;
 const ms = 1000 / 60;
-let options = {duration: ms, endDelay: -5};
+let options = { duration: ms, endDelay: -5 };
 /*let collisionBoxes = [];*/
+let displayStoryOnce = true;
 
 let scene2 = document.getElementById('scene2');
 const storyDisplay = document.getElementById('story-display');
 
 const storySegments = {
-    rock1: "Rock1",
-    rock2: "Rock2",
-    rock3: "Rock3",
+    rock1: "Ominous Figure: Lost little explorer? why do you cling to such a flimsy refuge? \n" +
+        "Ethan: Wh-who are you? \n" +
+        "Ominous Figure: Some call me the Drowned Captain, others the Ocean's Grasp. But you, little explorer, can call me Fate. Don't be afraid. The fog is your friend, a warm blanket to hide you from the harsh world.",
+    //rock2: "Rock2",
+    //rock3: "Rock3",
 };
 
 function createOcean() {
@@ -26,20 +29,20 @@ function createOcean() {
 
         // Create the ocean layers
         let layers = [
-            {id: 'layer7', value: '20', scrollSpeed: '5'},
-            {id: 'layer6', value: '15', scrollSpeed: '10'},
-            {id: 'layer5', value: '10', scrollSpeed: '15'},
-            {id: 'layer4', value: '5', scrollSpeed: '20'},
-            {id: 'layer3', value: '-5', scrollSpeed: '25'},
-            {id: 'layer2', value: '-10', scrollSpeed: '30'},
-            {id: 'layer1', value: '-15', scrollSpeed: '40'}
+            { id: 'layer7', value: '20', scrollSpeed: '5' },
+            { id: 'layer6', value: '15', scrollSpeed: '10' },
+            { id: 'layer5', value: '10', scrollSpeed: '15' },
+            { id: 'layer4', value: '5', scrollSpeed: '20' },
+            { id: 'layer3', value: '-5', scrollSpeed: '25' },
+            { id: 'layer2', value: '-10', scrollSpeed: '30' },
+            { id: 'layer1', value: '-15', scrollSpeed: '40' }
         ];
 
         // Create the item layers
         let items = [
-            {id: 'rock1', value: '0', scrollSpeed: '22', pos: [150, -11]},
-            {id: 'rock2', value: '0', scrollSpeed: '12', pos: [180, -2]},
-            {id: 'rock3', value: '0', scrollSpeed: '7', pos: [220, 0]},
+            { id: 'rock1', value: '0', scrollSpeed: '12', pos: [160, -8] },
+            //{ id: 'rock2', value: '0', scrollSpeed: '12', pos: [180, -2] },
+            //{ id: 'rock3', value: '0', scrollSpeed: '7', pos: [220, 0] },
         ];
 
         layers.forEach(layerInfo => {
@@ -81,6 +84,12 @@ function createOcean() {
         console.error('Element with ID "scene2" not found');
     }
 
+    // Add figure 1
+    const rockContainer = document.getElementById('rock1');
+    let char1 = document.createElement('div');
+    char1.id = 'char1';
+    rockContainer.appendChild(char1);
+
     // Parallax effect
     document.addEventListener("mousemove", parallax);
 
@@ -104,15 +113,15 @@ function moveOcean() {
         let scrollSpeed = parseFloat(layer.getAttribute('scrollSpeed')) / 40;
 
         let oceanAnim = layer.animate([
-            {backgroundPosition: `${oceanX * scrollSpeed}px bottom`},
-            {backgroundPosition: `${(oceanX + vx) * scrollSpeed}px bottom`}
+            { backgroundPosition: `${oceanX * scrollSpeed}px bottom` },
+            { backgroundPosition: `${(oceanX + vx) * scrollSpeed}px bottom` }
         ], options);
 
         oceanAnim.onfinish = () => {
             oceanX += vx;
             oceanAnim.effect.setKeyframes([
-                {backgroundPosition: `${oceanX * scrollSpeed}px bottom`},
-                {backgroundPosition: `${(oceanX + vx) * scrollSpeed}px bottom`}
+                { backgroundPosition: `${oceanX * scrollSpeed}px bottom` },
+                { backgroundPosition: `${(oceanX + vx) * scrollSpeed}px bottom` }
             ]);
             oceanAnim.play();
         };
@@ -122,15 +131,15 @@ function moveOcean() {
         let scrollSpeed = parseFloat(item.getAttribute('scrollSpeed')) / 40;
 
         let itemAnim = item.animate([
-            {transform: `translateX(${oceanX * scrollSpeed}px)`},
-            {transform: `translateX(${(oceanX + vx) * scrollSpeed}px)`}
+            { transform: `translateX(${oceanX * scrollSpeed}px)` },
+            { transform: `translateX(${(oceanX + vx) * scrollSpeed}px)` }
         ], options);
 
         itemAnim.onfinish = () => {
             oceanX += vx;
             itemAnim.effect.setKeyframes([
-                {transform: `translateX(${oceanX * scrollSpeed}px)`},
-                {transform: `translateX(${(oceanX + vx) * scrollSpeed}px)`}
+                { transform: `translateX(${oceanX * scrollSpeed}px)` },
+                { transform: `translateX(${(oceanX + vx) * scrollSpeed}px)` }
             ]);
             infoText.style.transform = `translateX(${oceanX * scrollSpeed * 3}px)`;
             itemAnim.play();
@@ -178,12 +187,14 @@ function moveOcean() {
 }*/
 
 function displayStory(elem) {
-    storyDisplay.classList.remove('scene1');
-    storyDisplay.classList.add('scene2');
-    storyDisplay.style.display = 'block';
-    typewriter(storySegments[elem], storyDisplay);
+    if (displayStoryOnce) {
+        displayStoryOnce = false;
+        storyDisplay.classList.remove('scene1');
+        storyDisplay.classList.add('scene2');
+        storyDisplay.style.display = 'block';
+        typewriter(storySegments[elem], storyDisplay);
+    }
 }
-
 
 //=====================================
 // Keybindings
@@ -200,12 +211,12 @@ onkeydown = onkeyup = (e) => {
         vx = speed;
     } else if (keys.KeyD && oceanX > -20000) {
         vx = -speed;
-        if (oceanX >= -1560 && oceanX <= -1540) {
+        if (oceanX >= -5720 && oceanX <= -5650) {
+            const char1 = document.getElementById('char1');
+            char1.style.opacity = 1;
             displayStory('rock1');
-        }if (oceanX >= -4470 && oceanX <= -4450) {
-            displayStory('rock2');
-        }if (oceanX >= -4470 && oceanX <= -4450) {
-            displayStory('rock3');
+        } if (oceanX >= -16000 && oceanX <= -15950) {
+            showScene1();
         }
     } else {
         vx = 0;
@@ -213,4 +224,4 @@ onkeydown = onkeyup = (e) => {
 };
 
 
-export {createOcean, moveOcean};
+export { createOcean, moveOcean };

@@ -1,6 +1,8 @@
-import {setBookExistent, createBook} from './book.js';
-import {createOcean, moveOcean} from './ocean.js';
-import {createGiftcard} from './giftcard.js';
+import { setBookExistent, createBook } from './book.js';
+import { createOcean, moveOcean } from './ocean.js';
+import { createGiftcard } from './giftcard.js';
+import { stopGame } from './gameLoop.js';
+import { fadeOut } from './fade.js';
 
 const scene1 = document.getElementById('scene1');
 const scene2 = document.getElementById('scene2');
@@ -11,20 +13,25 @@ const particle = document.getElementById('particle-container');
 //Sound Effects
 let turnPage = document.getElementById('turning_page');
 let openBook = document.getElementById('pickup_book');
-//TODO: Example (replace by voice audio). Replace writing with voice_audio_x
-let writing = document.getElementById('writing');
+let intro_audio = document.getElementById('intro_audio');
+let boat_audio = document.getElementById('boat_audio');
+let exams_audio = document.getElementById('exams_audio');
+let giftcard_audio = document.getElementById('birthdaycard_audio');
+let book_audio = document.getElementById('book_audio');
+let book1_audio = document.getElementById('book1_audio');
+let outro_audio = document.getElementById('outro_audio');
 
 let currentlyPlayingAudio = null;
 
-const audioFiles = [turnPage, openBook, writing];
+const audioFiles = [intro_audio, boat_audio, exams_audio, giftcard_audio, outro_audio];
 audioFiles.forEach(audio => {
     audio.addEventListener('ended', handleAudioEnd);
 });
 
 let divInfo = [
-    {id: 'boat', category: 1, clicked: false},
-    {id: 'exams', category: 1, clicked: false},
-    {id: 'giftcard', category: 2, clicked: false},
+    { id: 'boat', category: 1, clicked: false },
+    { id: 'exams', category: 1, clicked: false },
+    { id: 'giftcard', category: 2, clicked: false },
 ];
 
 let typewriterInterval;
@@ -32,14 +39,17 @@ let typewriterTimeout;
 let storyElementsCounter = 0;
 let allElementsClicked = false;
 
+let showSceneOnce = true;
+
 let eventListenerCounter = 0;
 
 const storySegments = {
     intro: "It's been a while since I've been here. Two years to be exact. Everything's exactly how he left it. Maybe going through his things will help me understand. I should have a look around.",
-    book: "This is the story for book.",
-    exams: "This is the story for Tim.",
-    boat: "This is the story for boat.",
-    giftcard: "This is the story for giftcard.",
+    book: "Stories were the things Ethan loved most. He loved hearing them, he loved telling them, but must of all, he loved creating them. This one, titled 'The Foggy Ocean', was his latest creation.",
+    exams: "Exams. Ethan was always so smart, usually got top marks without much trouble. But lately, these seem...different. Lots of empty spaces and drawings. Was something on his mind?",
+    boat: "Ethan always loved the sea. He'd spend hours talking about pirates and buried treasure, dreaming of adventures on the open water. I remember this ship. He build it with our father day after day. Used to say it would take him anywhere he wanted to go. Maybe that's where he is now, sailing the stars on an endless ocean.",
+    giftcard: "Ten years old. It feels like just yesterday we were making silly birthday cards and dreaming of adventures. Happy Birthday, Ethan.",
+    outro: "Maybe the fog was a way for him to process the world. A world that sometimes felt too small, too ordinary for a mind like his. Rest easy, little explorer. You'll always have a safe harbour in my heart."
 };
 
 function initiateStoryElements() {
@@ -68,8 +78,21 @@ function displayIntro() {
     playVoiceAudio('intro');
 }
 
+function displayOutro() {
+    storyDisplay.classList.remove('scene2');
+    storyDisplay.classList.add('scene1');
+    typewriter(storySegments.outro, storyDisplay);
+    storyDisplay.style.display = 'block';
+    playVoiceAudio('outro');
+    setTimeout(() => {
+        stopGame();
+        fadeOut(document.getElementById('musicScene2'), 8000);
+    }, 15000);
+}
+
 //Animation for Hint
 function startHintAnimation() {
+    console.log('startHintAnimation');
     if (!allElementsClicked) {
         const circles = document.querySelectorAll('.positioned-div');
         circles.forEach(div => {
@@ -111,7 +134,7 @@ function handleStoryElements(info) {
 
     if (storyElementsCounter === divInfo.length && !allElementsClicked) {
         allElementsClicked = true;
-        createStoryElements({id: 'book', category: 3});
+        createStoryElements({ id: 'book', category: 3 });
 
     }
 
@@ -146,28 +169,37 @@ function handleStoryElements(info) {
 }
 
 function playVoiceAudio(userInput) {
+    console.log(currentlyPlayingAudio);
     stopCurrentlyPlayingAudio();
 
     switch (userInput) {
         case 'intro':
             console.log('audio intro');
-            currentlyPlayingAudio = writing;
+            currentlyPlayingAudio = intro_audio;
             break;
         case 'boat':
             console.log('audio boat');
-            currentlyPlayingAudio = writing;
+            currentlyPlayingAudio = boat_audio;
             break;
         case 'exams':
             console.log('audio exams');
-            currentlyPlayingAudio = writing;
+            currentlyPlayingAudio = exams_audio;
             break;
         case 'giftcard':
             console.log('audio giftcard');
-            currentlyPlayingAudio = writing;
+            currentlyPlayingAudio = giftcard_audio;
             break;
-        case 'hint':
-            console.log('audio hint');
-            currentlyPlayingAudio = openBook;
+        case 'book':
+            console.log('audio book');
+            currentlyPlayingAudio = book_audio;
+            break;
+        case 'book1':
+            console.log('audio book1');
+            currentlyPlayingAudio = book1_audio;
+            break;
+        case 'outro':
+            console.log('audio outro');
+            currentlyPlayingAudio = outro_audio;
             break;
         default:
             console.log('Invalid input');
@@ -189,12 +221,14 @@ function stopCurrentlyPlayingAudio() {
 
 function handleAudioEnd() {
     currentlyPlayingAudio = null;
-    if (allElementsClicked) {
-        setTimeout(() => {
-            playVoiceAudio('hint');
-        }, 15000);
-    }
-    setTimeout(startHintAnimation, 5000);
+    console.log('Audio ended');
+    setTimeout(startHintAnimation, 4000);
+}
+
+function playVoiceAudioBook() {
+    setTimeout(() => {
+        playVoiceAudio('book1')
+    }, 2000);
 }
 
 function hideBackgroundContainer() {
@@ -228,18 +262,27 @@ function removeCSS(css) {
     }
 }
 
+function showScene1() {
+    console.log(showSceneOnce);
+    if (showSceneOnce) {
+        showSceneOnce = false;
+        scene2.style.opacity = 0;
+        setTimeout(displayOutro, 10000);
+    }
+}
+
 function showScene2() {
     createOcean();
+    const book1 = document.getElementById('book1');
 
     scene2.style.opacity = 1;
     moveOcean();
     setTimeout(() => {
         setBookExistent(false);
-        if (book1) {
-            book1.remove();
-        }
+        hideBackgroundContainer();
+        book1.remove();
         if (scene1) {
-            scene1.remove();
+            //scene1.remove();
         }
     }, 10000);
 }
@@ -259,7 +302,7 @@ function typewriter(text, element) {
             span.textContent = chars[index];
             element.appendChild(span);
 
-            span.animate([{opacity: 0}, {opacity: 1}], {
+            span.animate([{ opacity: 0 }, { opacity: 1 }], {
                 duration: 500, fill: 'forwards'
             });
 
@@ -272,8 +315,8 @@ function typewriter(text, element) {
                 element.style.display = 'none';
             }, 3000);
         }
-    }, 70);
+    }, 60);
 }
 
 
-export {initiateStoryElements, displayIntro, showScene2, typewriter, startHintAnimation};
+export { initiateStoryElements, displayIntro, showScene1, showScene2, typewriter, startHintAnimation, playVoiceAudioBook, hideBackgroundContainer };

@@ -25,17 +25,17 @@ function createGiftcard() {
 
     // Create and append the text elements
     const texts = [
-        { tag: 'h4', class: 'color1', content: "You're not a Fossil! (YET)" },
-        { tag: 'h4', class: 'color2 margin', content: '(HAPPY BIRTHDAY)' },
+        { tag: 'h4', class: 'color1', content: "To Ethan" },
+        { tag: 'h4', class: 'color2 margin', content: 'Happy 10th Birthday!' },
         { tag: 'p', content: 'Dear Ethan,' },
-        { tag: 'p', content: "Let's see.. ." },
-        { tag: 'p', content: "You’re never around, you" },
-        { tag: 'p', content: "hate the music I’m into, you" },
-        { tag: 'p', content: "practically despise the movies I" },
-        { tag: 'p', content: "like, and yet somehow you still" },
-        { tag: 'p', content: "manage to be the best dad every year." },
-        { tag: 'p', content: "How do you do that? :)" },
-        { tag: 'p', class: 'text-right', content: 'Happy Birthday, Ethan!' },
+        { tag: 'p', content: "Remember all those adventures we" },
+        { tag: 'p', content: "planned with your trusty Triceratops by" },
+        { tag: 'p', content: "your side? I can't wait to hear all about" },
+        { tag: 'p', content: "the real adventures you have this year." },
+        { tag: 'p', content: "May your day be full of laughter, cake," },
+        { tag: 'p', content: "and maybe even a real" },
+        { tag: 'p', content: "dinosaur discovery!" },
+        { tag: 'p', class: 'text-right', content: 'Love,' },
         { tag: 'p', class: 'text-right', content: 'Ava' }
     ];
 
